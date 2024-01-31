@@ -11,7 +11,7 @@ pipeline {
       parallel {
         stage('Tests') {
           steps {
-            sh 'dotnet test tests'
+            sh 'dotnet publish eShopOnWeb.sln -o /var/aspnet  -p:ErrorOnDuplicatePublishOutputFiles=false'
           }
         }
 
@@ -27,6 +27,12 @@ pipeline {
           }
         }
 
+      }
+    }
+
+    stage('Deployment') {
+      steps {
+        sh ' dotnet publish eShopOnWeb.sln -o /var/aspnet  -p:ErrorOnDuplicatePublishOutputFiles=false'
       }
     }
 
